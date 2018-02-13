@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#26a69a</color>
+    <color name="colorPrimaryDark">#26a69a</color>
+    <color name="colorAccent">#df377a</color>
+    <color name="colorOffline">#DA4336</color>
+    <color name="colorOnline">#196E15</color>
+    <color name="light_green">#27ab21</color>
+    <color name="trial">#78172c</color>
+    <color name="section_label">#BAD0BB</color>
+	<color name="section_bg">#a9cea7</color>
+    <color name="image_selected">#96dde238</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="blue">#46BCFF</color>
+    <color name="orange">#FF9800</color>
+    <color name="dark_orange">#CE7B00</color>
+    <color name="green">#26611F</color>
+    <color name="transparent">#00000000</color>
+    <color name="hint_color">#B4B4B6</color>
+    <color name="grey">#787676</color>
+    <color name="lt_grey">#CCCCCC</color>
+    <color name="lt_black">#CC000000</color>
+	<color name="custom_progress_bg_color">#EEEEEE</color>
+	<color name="custom_progress_message_color">#6D6D6D</color>
+    <color name="edit_text_outline">#C1C0C0</color>
+    <color name="edit_text_highlight">#BAD0BB</color>
+    <color name="list_select_highlight">#BAD0BB</color>
+    <color name="select_highlight">#BAD0BB</color>
+    <color name="edittext_disabled">#EFEEEE</color>
+    <color name="edittext_disabled_dark">#FFCFCECE</color>
+    <color name="background_material_light">#FFFFFF</color>
+    <color name="top_panel_color">#C1C1C1</color>
+    <color name="bottom_panel_color">#EAEAEA</color>
+    <color name="gradient_start_color">#E7E7E7</color>
+    <color name="event_color">#EDEDEF</color>
+    <color name="current_day_color">#B9CEBB</color>
+    <color name="red">#DA4336</color>
+
+
+</resources>

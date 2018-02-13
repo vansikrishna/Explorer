@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Explorer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty_search_query">Search key is empty</string>
+    <string name="empty_place_id">Empty place id to make query</string>
+    <string name="powered_by_google">Powered by Google</string>
+</resources>
