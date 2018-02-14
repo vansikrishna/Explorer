@@ -4,6 +4,7 @@ package com.dreamers.explorer.dagger;
  * Created by c029312 on 2/7/18.
  */
 
+import com.dreamers.explorer.common.CommonPresenter;
 import com.dreamers.explorer.placelist.presenter.PlaceListPresenter;
 import com.dreamers.explorer.placesearch.PlaceSearchFragment;
 import com.dreamers.explorer.placesearch.presenter.PlaceSearchPresenter;
@@ -23,6 +24,11 @@ public class AppModule {
     @Provides
     public PlaceListPresenter providePlaceListPresenter(){
         return new PlaceListPresenter();
+    }
+
+    @Provides
+    public CommonPresenter provideCommonPresenter(){
+        return new CommonPresenter();
     }
 
     @Provides

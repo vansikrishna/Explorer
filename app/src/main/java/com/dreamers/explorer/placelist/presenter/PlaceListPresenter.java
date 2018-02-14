@@ -1,5 +1,8 @@
 package com.dreamers.explorer.placelist.presenter;
 
+import android.app.Activity;
+
+import com.dreamers.explorer.HomeActivity;
 import com.dreamers.explorer.R;
 import com.dreamers.explorer.RetrofitService;
 import com.dreamers.explorer.common.Constants;
