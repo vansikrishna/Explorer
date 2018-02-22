@@ -5,6 +5,7 @@ package com.dreamers.explorer.dagger;
  */
 
 import com.dreamers.explorer.common.CommonPresenter;
+import com.dreamers.explorer.placedetail.presenter.PlaceDetailPresenter;
 import com.dreamers.explorer.placelist.presenter.PlaceListPresenter;
 import com.dreamers.explorer.placesearch.PlaceSearchFragment;
 import com.dreamers.explorer.placesearch.presenter.PlaceSearchPresenter;
@@ -15,6 +16,11 @@ import dagger.Provides;
 
 @Module
 public class AppModule {
+
+    @Provides
+    public PlaceDetailPresenter providePlaceDetailPresenter(){
+        return new PlaceDetailPresenter();
+    }
 
     @Provides
     public PlaceSearchPresenter providePlaceSearchPresenter(){

@@ -2,6 +2,7 @@ package com.dreamers.explorer.dagger;
 
 import com.dreamers.explorer.HomeActivity;
 import com.dreamers.explorer.HomeApp;
+import com.dreamers.explorer.placedetail.PlaceDetailFragment;
 import com.dreamers.explorer.placelist.PlaceListFragment;
 import com.dreamers.explorer.placesearch.PlaceSearchFragment;
 import com.dreamers.explorer.placesearch.presenter.PlaceSearchPresenter;
@@ -20,4 +21,6 @@ public interface AppComponent {
     void inject(PlaceSearchPresenter presenter);
 
     void inject(PlaceListFragment placeListFragment);
+
+    void inject(PlaceDetailFragment placeDetailFragment);
 }

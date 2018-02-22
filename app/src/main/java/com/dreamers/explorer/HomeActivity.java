@@ -3,8 +3,8 @@ package com.dreamers.explorer;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
+import com.dreamers.explorer.placedetail.PlaceDetailFragment;
 import com.dreamers.explorer.placedetail.modal.Place;
 import com.dreamers.explorer.placelist.PlaceListFragment;
 import com.dreamers.explorer.placesearch.PlaceSearchFragment;
@@ -13,7 +13,7 @@ import com.dreamers.explorer.placesearch.modal.Prediction;
 import butterknife.ButterKnife;
 
 public class HomeActivity extends AppCompatActivity implements PlaceListFragment.OnFragmentInteractionListener,
-        PlaceSearchFragment.OnFragmentInteractionListener{
+        PlaceSearchFragment.OnFragmentInteractionListener, PlaceDetailFragment.OnFragmentInteractionListener{
 
     ProgressDialog progressDialog;
 
@@ -56,7 +56,10 @@ public class HomeActivity extends AppCompatActivity implements PlaceListFragment
 
     @Override
     public void showPlaceDetail(Place place) {
-        Toast.makeText(this, place.name, Toast.LENGTH_LONG).show();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_layout, PlaceDetailFragment.newInstance(place))
+                .addToBackStack("DETAIL")
+                .commit();
     }
 
     @Override

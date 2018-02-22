@@ -1,53 +1,62 @@
 package com.dreamers.explorer.placedetail;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.dreamers.explorer.HomeActivity;
+import com.dreamers.explorer.HomeApp;
 import com.dreamers.explorer.R;
+import com.dreamers.explorer.RetrofitService;
+import com.dreamers.explorer.placedetail.modal.Place;
+import com.dreamers.explorer.placedetail.presenter.PlaceDetailPresenter;
+import com.dreamers.explorer.placedetail.view.PlaceDetailView;
+import com.dreamers.explorer.placeimages.PlaceImagesAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link PlaceDetailFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link PlaceDetailFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class PlaceDetailFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class PlaceDetailFragment extends Fragment implements PlaceDetailView{
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    @BindView(R.id.name)
+    TextView name;
+    @BindView(R.id.ratingBar)
+    RatingBar ratingBar;
+    @BindView(R.id.address)
+    TextView address;
+    @BindView(R.id.description)
+    TextView description;
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
+    @BindView(R.id.tabLayout)
+    TabLayout tabLayout;
+
+    private Place place;
+    @Inject
+    RetrofitService retrofitService;
+    @Inject
+    PlaceDetailPresenter placeDetailPresenter;
 
     private OnFragmentInteractionListener mListener;
 
     public PlaceDetailFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PlaceDetailFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PlaceDetailFragment newInstance(String param1, String param2) {
+    public static PlaceDetailFragment newInstance(Place place) {
         PlaceDetailFragment fragment = new PlaceDetailFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putParcelable(ARG_PARAM1, place);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,23 +65,34 @@ public class PlaceDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            place = getArguments().getParcelable(ARG_PARAM1);
         }
+        ((HomeApp) getActivity().getApplication()).getAppComponent().inject(this);
+        placeDetailPresenter.attach(this, retrofitService);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_place_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_place_detail, container, false);
+        ButterKnife.bind(this, view);
+        loadPlaceDetail();
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    private void loadPlaceDetail() {
+        setupViews(place);
+        placeDetailPresenter.getPlaceDetail(place.place_id);
+    }
+
+    private void setupViews(Place place) {
+        name.setText(place.name);
+        address.setText(place.formatted_address);
+        ratingBar.setRating(place.rating);
+        description.setText(place.reference);
+        PlaceImagesAdapter storePagerAdpter =  new PlaceImagesAdapter(getActivity(), place.photos);
+        viewPager.setAdapter(storePagerAdpter);
+        tabLayout.setupWithViewPager(viewPager, true);
     }
 
     @Override
@@ -92,18 +112,37 @@ public class PlaceDetailFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public void showProgress() {
+        if(getActivity() != null){
+            ((HomeActivity) getActivity()).showProgress();
+        }
+    }
+
+    @Override
+    public void dismissProgress() {
+        if(getActivity() != null){
+            ((HomeActivity) getActivity()).dismissProgress();
+        }
+    }
+
+    @Override
+    public void onGetPlaceDetailResponse(Place place) {
+        setupViews(place);
+    }
+
+    @Override
+    public void showToastMessage(int resId) {
+        Toast.makeText(getActivity(), resId, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showToastMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+    }
+
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void showProgress();
+        void dismissProgress();
     }
 }
